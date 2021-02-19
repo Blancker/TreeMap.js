@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>TreeMap Demo</title>
+		<link rel="stylesheet" type="text/css" href="./css/treeMap.css"/>
+	</head>
+	<body>
+		<div id='treeMap-horizontal'></div>
+		<br /><hr /><br />
+		<div id='treeMap-vertical'></div>
+		
+		<script src="./js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/treeMap.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$.ajax({
+					url: "./data/demo.json",
+					type: 'GET',
+					dataType: 'JSON',
+					success: function(result){
+						$("#treeMap-horizontal").treeMap({
+							data : result, // 渲染树状图的数据【必须】
+							initLi : function (item) {
+								var liStyle = "", liTitle = "";
+								if (item.id == 2) {
+									liStyle = "background-color:rgb(255,0,0);";
+									liTitle = "已完成";
+								} else if(item.id == 5) {
+									liStyle = "background-color:rgb(0,255,0);";
+									liTitle = "进行中";
+								}
+								return $("<li style='" + liStyle + "' title='" + liTitle + "'></li>").append("<span>" + item.text + "</span>");
+							}
+						});
+						
+						$("#treeMap-vertical").treeMap({
+							data : result, // 渲染树状图的数据【必须】
+							direction : "vertical", // 渲染树状图的轴方向（vertical: 垂直 ; horizontal: 水平）
+							initLi : function (item) {
+								var liStyle = "", liTitle = "";
+								if (item.id == 2) {
+									liStyle = "background-color:rgb(255,0,0);";
+									liTitle = "已完成";
+								} else if(item.id == 5) {
+									liStyle = "background-color:rgb(0,255,0);";
+									liTitle = "进行中";
+								}
+								return $("<li style='" + liStyle + "' title='" + liTitle + "'></li>").append("<span>" + item.text + "</span>");
+							}
+						});
+					}
+				});
+			});
+			
+			
+			function toView(id) {
+				alert(id);
+			}
+		</script>
+	</body>
+</html>
